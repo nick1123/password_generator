@@ -39,7 +39,7 @@ function generatePassword() {
     newPassword += chars[Math.round(Math.random() * (chars.length - 1))];
   }
 
-  document.getElementById("newPassword").innerHTML = "New Password is: " + newPassword;
+  document.getElementById("newPassword").innerHTML = "<h1>New Password is: " + newPassword + "</h1>";
 }
       </script>
     </head>
@@ -57,12 +57,11 @@ function generatePassword() {
 
       <div class="starter-template">
         <form>
-          <h1>Generate a new password<br>
-            with <input id="newPasswordLength" type="number" min="8" value="15" max="128"><br>
+          <p class="lead">Generate a new password
+            with <input id="newPasswordLength" type="number" min="8" value="15" max="128">
             letters &amp; numbers.
-            <br>
-            <input type="button" value="Go!" onClick="generatePassword();"><br>
-            </h1>
+            <input type="button" value="Go!" onClick="generatePassword();">
+            </p>
 
             <span id="newPassword"></a>
         </form>
