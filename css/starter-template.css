@@ -5,3 +5,8 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+.footer {
+  font-size: 80%;
+  font-color: #999;
+}
