@@ -25,23 +25,75 @@
     <![endif]-->
 
 
-      <script language="javascript" type="text/javascript">
-function generatePassword() {
+      <script type="text/javascript">
 
-  // You'll notice that I omitted a few alphanumerics like i, 1, O, 0, etc.
-  // because it's difficult to visually distinguish between them
-  var chars = '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+        (function(){
 
-  var length = document.getElementById("newPasswordLength").value;
-  var newPassword = '';
+          function ready(fn) {
+            if (document.addEventListener) {
+              document.addEventListener('DOMContentLoaded', fn);
+            } else {
+              document.attachEvent('onreadystatechange', function() {
+                if (document.readyState === 'interactive')
+                  fn();
+              });
+            }
+          };
 
-  for (var i = length; i > 0; --i) {
-    newPassword += chars[Math.round(Math.random() * (chars.length - 1))];
-  }
+          function addEventListener(el, eventName, handler) {
+            if (el.addEventListener) {
+              el.addEventListener(eventName, handler);
+            } else {
+              el.attachEvent('on' + eventName, function(){
+                handler.call(el);
+              });
+            }
+          };
 
-  document.getElementById("newPassword").innerHTML = "<h1>New Password is: " + newPassword + "</h1>";
-}
+          function removeClass(el, className) {
+            if (el.classList)
+              el.classList.remove(className);
+            else
+              el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+          };
+
+          function generatePassword() {
+
+            // You'll notice that I omitted a few alphanumerics like i, 1, O, 0, etc.
+            // because it's difficult to visually distinguish between them
+            var chars = '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+
+            var length = document.getElementById("newPasswordLength").value;
+            var newPassword = '';
+
+            for (var i = length; i > 0; --i) {
+              newPassword += chars[Math.round(Math.random() * (chars.length - 1))];
+            }
+            return newPassword;
+          };
+
+          ready(function() {
+            addEventListener(document.querySelector('.button-go'), 'click', function(){
+              document.getElementById("newPassword").innerHTML = generatePassword();
+              removeClass(document.querySelector(".new-password-parent"), 'hide-el');
+            });
+          });
+
+          // jquery
+          // $('document').ready(function(){
+          //   $('.button-go').on('click', function(){
+          //     $('#newPassword').html(generatePassword());
+          //     $('.new-password-parent').removeClass('.hide-el');
+          //   });
+          // });
+
+        })();
+
       </script>
+
+      <style>
+        .hide-el { display: none; }
+      </style>
     </head>
     <body>
 
@@ -60,10 +112,10 @@ function generatePassword() {
           <p class="lead">Generate a new password
             with <input id="newPasswordLength" type="number" min="8" value="15" max="128">
             letters &amp; numbers.
-            <input type="button" value="Go!" onClick="generatePassword();">
-            </p>
+            <input type="button" value="Go!" class="button-go" />
+          </p>
 
-            <span id="newPassword"></a>
+          <h1 class="new-password-parent hide-el">New Password is: <span id="newPassword"></span></h1>
         </form>
 
 
